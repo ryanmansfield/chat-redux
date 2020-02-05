@@ -1,25 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { selectChannel } from '../actions/index';
+
+class ChannelList extends Component {
 
 
-import Message from '../components/message';
+  handleClick = (channel) => {
+    this.props.selectChannel(channel);
+  }
 
-class MessageList extends Component {
-    render() {
+  renderChannel = (channel) => {
+    return (
+      <li
+        key={channel}
+        className={channel === this.props.selectedChannel ? 'active' : null}
+        onClick={() => this.handleClick(channel)}
+      >
+        #{channel}
+      </li>
+    );
+  }
+  render() {
     return (
       <div className="channels-container">
         <span>Redux Chat</span>
         <ul>
-          {
-            this.props.channels.map((channel) => {
-              return (
-                <li> #{channel} </li>
-              );
-            })
-          }
+          { this.props.channels.map(this.renderChannel)}
         </ul>
       </div>
-
     );
   }
 }
@@ -27,8 +36,13 @@ class MessageList extends Component {
 function mapStateToProps (state) {
   return {
     channels: state.channels,
+    selectedChannel: state.selectedChannel
   };
 }
 
-export default connect(mapStateToProps)(MessageList);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ selectChannel }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChannelList);
 

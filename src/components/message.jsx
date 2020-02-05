@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 const Message = (props) => {
   const { created_at, author, content} = props.message;
-  const time = "12:30"
+  const time = new Date(created_at).toLocaleTimeString();
   return (
   <div className="message-container">
     <i className="author">
