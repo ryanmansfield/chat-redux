@@ -45,7 +45,7 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ selectChannel, ftechMessages }, dispatch)
+  return bindActionCreators({ selectChannel, fetchMessages }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChannelList);
